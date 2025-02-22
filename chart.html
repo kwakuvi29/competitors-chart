@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <title>Evolution Charts</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         canvas {
@@ -9,74 +10,77 @@
             -webkit-user-select: none;
             -ms-user-select: none;
         }
+        #chart-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            height: 80vh;
+        }
     </style>
 </head>
 <body>
-    <div style="width:75%;">
-        <canvas id="canvas1"></canvas>
+    <div id="chart-container">
+        <canvas id="reviewsChart"></canvas>
+        <canvas id="ratingsChart"></canvas>
     </div>
-    <div style="width:75%;margin-top:30px;">
-        <canvas id="canvas2"></canvas>
-    </div>
-    <script>
-        var reviewData = {"labels":["Dece 23 2024","Dece 30 2024","Janv 6 2025","2025-01-12T23:00:00.000Z","2025-01-19T23:00:00.000Z","2025-01-26T23:00:00.000Z","2025-02-02T23:00:00.000Z","2025-02-09T23:00:00.000Z"],"datasets":[{"label":"Easy Catalog: Wholesale/Retail","data":[158,158,160,164,164,165,165,165]},{"label":"Catalog Maker by Now in Store","data":[175,175,175,175,177,177,178,178]},{"label":"Catalogly: PDF Catalogs","data":[15,null,17,17,17,18,18,18]},{"label":"Ace Catalog Maker: PDF Catalog","data":[75,75,75,76,79,81,81,81]},{"label":"Catalog Machine","data":[27,27,27,27,27,27,27,27]},{"label":"Hukify","data":[106,106,106,106,106,106,106,106]}]};
-        var ratingData = {"labels":["Dece 23 2024","Dece 30 2024","Janv 6 2025","2025-01-12T23:00:00.000Z","2025-01-19T23:00:00.000Z","2025-01-26T23:00:00.000Z","2025-02-02T23:00:00.000Z","2025-02-09T23:00:00.000Z"],"datasets":[{"label":"Easy Catalog: Wholesale/Retail","data":[4.5,4.6,4.7,4.6,4.6,4.6,4.6,4.6]},{"label":"Catalog Maker by Now in Store","data":[4.1,4.1,4.1,4.1,4.1,4.1,4,4]},{"label":"Catalogly: PDF Catalogs","data":[4.9,4.9,5,5,5,5,5,5]},{"label":"Ace Catalog Maker: PDF Catalog","data":[4.2,4.9,4.8,4.8,4.8,4.8,4.8,4.8]},{"label":"Catalog Machine","data":[3.9,3.9,3.9,3.9,3.9,3.9,3.9,3.9]},{"label":"Hukify","data":[4.7,4.7,4.7,4.7,4.7,4.7,4.7,4.7]}]};
 
-        var chartOptions = { 
-            responsive: true,
-            maintainAspectRatio: false,
-            legend: {
-                position: 'right',
-            },
-            tooltips: {
-                mode: 'index',
-                intersect: false,
-            },
-            hover: {
-                mode: 'nearest',
-                intersect: true
-            },
-            scales: {
-                xAxes: [{
-                    display: true,
-                    scaleLabel: {
-                        display: true,
-                        labelString: 'Week'
-                    }
-                }],
-                yAxes: [{
-                    display: true,
-                    scaleLabel: {
-                        display: false,
-                        labelString: 'Value'
-                    }
-                }]
-            }
+    <script>
+        var reviews = {
+            labels: ["Dece 23 2024","Dece 30 2024","Janv 6 2025","2025-01-12T23:00:00.000Z","2025-01-19T23:00:00.000Z","2025-01-26T23:00:00.000Z","2025-02-02T23:00:00.000Z","2025-02-09T23:00:00.000Z"],
+            datasets: [
+                { label: "Easy Catalog: Wholesale/Retail", data: [158,158,160,164,164,165,165,165] },
+                { label: "Catalog Maker by Now in Store", data: [175,175,175,175,177,177,178,178] },
+                { label: "Catalogly: PDF Catalogs", data: [15,null,17,17,17,18,18,18] },
+                { label: "Ace Catalog Maker: PDF Catalog", data: [75,75,75,76,79,81,81,81] },
+                { label: "Catalog Machine", data: [27,27,27,27,27,27,27,27] },
+                { label: "Hukify", data: [106,106,106,106,106,106,106,106] }
+            ]
         };
 
-        var chartColors = ['#97B556', '#DCDCDC', '#FDB82A', '#0074BC', '#39B6B2', '#A20061'];
-
-        // Processing data for chart 1 and chart 2 -- Assign color for each dataset
-        [reviewData, ratingData].forEach(data => {
-            data.datasets.forEach((dataset, index) => {
-                dataset.borderColor = chartColors[index];
-                dataset.backgroundColor = chartColors[index];
-                dataset.fill = false;
-            });
-        });
+        var ratings = {
+            labels: ["Dece 23 2024","Dece 30 2024","Janv 6 2025","2025-01-12T23:00:00.000Z","2025-01-19T23:00:00.000Z","2025-01-26T23:00:00.000Z","2025-02-02T23:00:00.000Z","2025-02-09T23:00:00.000Z"],
+            datasets: [
+                { label: "Easy Catalog: Wholesale/Retail", data: [4.5,4.6,4.7,4.6,4.6,4.6,4.6,4.6] },
+                { label: "Catalog Maker by Now in Store", data: [4.1,4.1,4.1,4.1,4.1,4.1,4,4] },
+                { label: "Catalogly: PDF Catalogs", data: [4.9,4.9,5,5,5,5,5,5] },
+                { label: "Ace Catalog Maker: PDF Catalog", data: [4.2,4.9,4.8,4.8,4.8,4.8,4.8,4.8] },
+                { label: "Catalog Machine", data: [3.9,3.9,3.9,3.9,3.9,3.9,3.9,3.9] },
+                { label: "Hukify", data: [4.7,4.7,4.7,4.7,4.7,4.7,4.7,4.7] }
+            ]
+        };
 
         window.onload = function() {
-            var ctx1 = document.getElementById('canvas1').getContext('2d');
-            var ctx2 = document.getElementById('canvas2').getContext('2d');
-            window.line1 = new Chart(ctx1, {
+            var ctx = document.getElementById('reviewsChart').getContext('2d');
+            new Chart(ctx, {
                 type: 'line',
-                data: reviewData,
-                options: chartOptions
+                data: reviews,
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                        }
+                    }
+                }
             });
-            window.line2 = new Chart(ctx2, {
+            ctx = document.getElementById('ratingsChart').getContext('2d');
+            new Chart(ctx, {
                 type: 'line',
-                data: ratingData,
-                options: chartOptions
+                data: ratings,
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                        },
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 5
+                        },
+                    }
+                }
             });
         };
     </script>
