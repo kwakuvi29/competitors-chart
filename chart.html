@@ -1,58 +1,118 @@
-Sure, here is your code:
-
-```html
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Charts</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-line Chart</title>
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .chart-container {
+            width: 80%; /* Réduction de la largeur */
+            max-width: 800px; /* Divisé par 2 */
+            height: 400px; /* Divisé par 2 */
+            margin: 20px auto; /* Ajustement de l'espacement */
+        }
+
         canvas {
-            -moz-user-select: none;
-            -webkit-user-select: none;
-            -ms-user-select: none;
+            width: 100% !important;
+            height: 100% !important;
         }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-<canvas id="reviewsChart"></canvas>
-<canvas id="ratingsChart"></canvas>
-<script>
-    const data = {"reviews":{"labels":["Dece 23 2024","Dece 30 2024","Janv 6 2025","2025-01-12T23:00:00.000Z","2025-01-19T23:00:00.000Z","2025-01-26T23:00:00.000Z","2025-02-02T23:00:00.000Z","2025-02-09T23:00:00.000Z"],"datasets":[{"label":"Easy Catalog: Wholesale/Retail","data":[158,158,160,164,164,165,158,165]},{"label":"Catalog Maker by Now in Store","data":[175,175,175,175,177,177,175,178]},{"label":"Catalogly: PDF Catalogs","data":[15,null,null,null,null,null,15,null]},{"label":"Ace Catalog Maker: PDF Catalog","data":[75,75,75,76,79,81,75,81]},{"label":"Catalog Machine","data":[27,27,27,27,27,27,27,27]},{"label":"Hukify","data":[106,106,106,106,106,106,106,106]}]},"ratings":{"labels":["Dece 23 2024","Dece 30 2024","Janv 6 2025","2025-01-12T23:00:00.000Z","2025-01-19T23:00:00.000Z","2025-01-26T23:00:00.000Z","2025-02-02T23:00:00.000Z","2025-02-09T23:00:00.000Z"],"datasets":[{"label":"Easy Catalog: Wholesale/Retail","data":[4.5,4.6,4.7,4.6,4.6,4.6,4.6,4.6]},{"label":"Catalog Maker by Now in Store","data":[4.1,4.1,4.1,4.1,4.1,4.1,4,4]},{"label":"Catalogly: PDF Catalogs","data":[4.9,4.9,5,5,5,5,5,5]},{"label":"Ace Catalog Maker: PDF Catalog","data":[4.2,4.9,4.8,4.8,4.8,4.8,4.8,4.8]},{"label":"Catalog Machine","data":[3.9,3.9,3.9,3.9,3.9,3.9,3.9,3.9]},{"label":"Hukify","data":[4.7,4.7,4.7,4.7,4.7,4.7,4.7,4.7]}]}};
+    <h2 style="font-size: 24px; margin-bottom: 20px;">Reviews & Ratings Over Time</h2>
 
-    //creating chart
-    var ctx1 = document.getElementById('reviewsChart'); 
-    var reviewsChart = new Chart(ctx1, {
-        type: 'line', 
-        data: data.reviews, 
-        options: { 
-            responsive: true,
-            plugins: {
-                legend: {
-                    display: true,
-                    position: 'right'
-                }
-            }
-        }
-    });
+    <div class="chart-container">
+        <canvas id="reviewsChart"></canvas>
+    </div>
 
-    var ctx2 = document.getElementById('ratingsChart');
-    var ratingsChart = new Chart(ctx2, {
-        type: 'line',
-        data: data.ratings,
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    display: true,
-                    position: 'right'
+    <div class="chart-container">
+        <canvas id="ratingsChart"></canvas>
+    </div>
+
+    <script>
+        var reviewsData = {
+            labels: ["Dec 23 2024", "Dec 30 2024", "Jan 6 2025", "Jan 13 2025", "Jan 20 2025", "Jan 27 2025", "Feb 3 2025", "Feb 10 2025"],
+            datasets: [
+                {
+                    label: "Easy Catalog: Wholesale/Retail",
+                    data: [158, 158, 160, 164, 164, 165, 158, 165],
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    tension: 0.4
+                },
+                {
+                    label: "Catalog Maker by Now in Store",
+                    data: [175, 175, 175, 175, 177, 177, 175, 178],
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    tension: 0.4
                 }
-            }
+            ]
+        };
+
+        var ratingsData = {
+            labels: ["Dec 23 2024", "Dec 30 2024", "Jan 6 2025", "Jan 13 2025", "Jan 20 2025", "Jan 27 2025", "Feb 3 2025", "Feb 10 2025"],
+            datasets: [
+                {
+                    label: "Easy Catalog: Wholesale/Retail",
+                    data: [4.5, 4.6, 4.7, 4.6, 4.6, 4.6, 4.6, 4.6],
+                    borderColor: 'rgba(255, 159, 64, 1)',
+                    backgroundColor: 'rgba(255, 159, 64, 0.2)',
+                    tension: 0.4
+                },
+                {
+                    label: "Catalog Maker by Now in Store",
+                    data: [4.1, 4.1, 4.1, 4.1, 4.1, 4.1, 4, 4],
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    tension: 0.4
+                }
+            ]
+        };
+
+        function createChart(canvasId, chartData, title) {
+            var ctx = document.getElementById(canvasId).getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: chartData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: { font: { size: 14 } } /* Légende plus petite */
+                        }
+                    },
+                    scales: {
+                        x: {
+                            title: { display: true, text: 'Weeks', font: { size: 16 } },
+                            ticks: { font: { size: 14 } }
+                        },
+                        y: {
+                            title: { display: true, text: title, font: { size: 16 } },
+                            ticks: { font: { size: 14 } }
+                        }
+                    }
+                }
+            });
         }
-    });
-</script>
+
+        window.onload = function() {
+            createChart('reviewsChart', reviewsData, 'Number of Reviews');
+            createChart('ratingsChart', ratingsData, 'Average Ratings');
+        };
+    </script>
 </body>
 </html>
-```
-
-Please replace the `const data = ...` part in the Javascript code with the actual JSON you provided or use this code as a template for dynamically creating this data. This code creates two multiline charts using Chart.js, one for reviews and one for ratings.
