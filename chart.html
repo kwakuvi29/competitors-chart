@@ -1,84 +1,71 @@
 ```html
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <title>Charts</title>
-    <style>
-        canvas{
-            width: 800px !important;
-            height: 400px !important;
-        }
-    </style>
+    <title>Evolution of Reviews and Ratings</title>
 </head>
 <body>
-    <canvas id="chart1"></canvas>
-    <canvas id="chart2"></canvas>
-    <script>
-        var ctx1 = document.getElementById('chart1').getContext('2d');
-        var myChart1 = new Chart(ctx1, {
-            type: 'line',
-            data: {
-                labels: ["Dece 23 2024","Dece 30 2024","Janv 6 2025","2025-01-12T23:00:00.000Z","2025-01-19T23:00:00.000Z","2025-01-26T23:00:00.000Z","2025-02-02T23:00:00.000Z","2025-02-09T23:00:00.000Z"],
-                datasets: [{"label":"Easy Catalog: Wholesale/Retail","data":[158,158,160,164,164,165,158,165]},
-                           {"label":"Catalog Maker by Now in Store","data":[175,175,175,175,177,177,175,178]},
-                           {"label":"Catalogly: PDF Catalogs","data":[15,null,null,null,null,null,15,null]},
-                           {"label":"Ace Catalog Maker: PDF Catalog","data":[75,75,75,76,79,81,75,81]},
-                           {"label":"Catalog Machine","data":[27,27,27,27,27,27,27,27]},
-                           {"label":"Hukify","data":[106,106,106,106,106,106,106,106]}],
-            },
-            options: {
-                layout: {
-                  padding: {
-                    right: 10
-                  }
-                },
-                plugins: {
-                    legend: {
-                        position: 'right',
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
+    <canvas id="multi-line-chart1"></canvas>
+    <canvas id="multi-line-chart2"></canvas>
 
-        var ctx2 = document.getElementById('chart2').getContext('2d');
-        var myChart2 = new Chart(ctx2, {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        var reviews = {
+            labels: ["Dece 23 2024", "Dece 30 2024", "Janv 6 2025", "2025-01-12T23:00:00.000Z", "2025-01-19T23:00:00.000Z", "2025-01-26T23:00:00.000Z", "2025-02-02T23:00:00.000Z", "2025-02-09T23:00:00.000Z"],
+            datasets: [
+                {label: "Easy Catalog: Wholesale/Retail", data: [158, 158, 160, 164, 164, 165, 158, 165]},
+                {label: "Catalog Maker by Now in Store", data: [175, 175, 175, 175, 177, 177, 175, 178]},
+                {label: "Catalogly: PDF Catalogs", data: [15, null, null, null, null, null, 15, null]},
+                {label: "Ace Catalog Maker: PDF Catalog", data: [75, 75, 75, 76, 79, 81, 75, 81]},
+                {label: "Catalog Machine", data: [27, 27, 27, 27, 27, 27, 27, 27]},
+                {label: "Hukify", data: [106, 106, 106, 106, 106, 106, 106, 106]}
+            ]
+        };
+
+        var ratings = {
+            labels: ["Dece 23 2024", "Dece 30 2024", "Janv 6 2025", "2025-01-12T23:00:00.000Z", "2025-01-19T23:00:00.000Z", "2025-01-26T23:00:00.000Z", "2025-02-02T23:00:00.000Z", "2025-02-09T23:00:00.000Z"],
+            datasets: [
+                {label: "Easy Catalog: Wholesale/Retail", data: [4.5, 4.6, 4.7, 4.6, 4.6, 4.6, 4.6, 4.6]},
+                {label: "Catalog Maker by Now in Store", data: [4.1, 4.1, 4.1, 4.1, 4.1, 4.1, 4, 4]},
+                {label: "Catalogly: PDF Catalogs", data: [4.9, 4.9, 5, 5, 5, 5, 5, 5]},
+                {label: "Ace Catalog Maker: PDF Catalog", data: [4.2, 4.9, 4.8, 4.8, 4.8, 4.8, 4.8, 4.8]},
+                {label: "Catalog Machine", data: [3.9, 3.9, 3.9, 3.9, 3.9, 3.9, 3.9, 3.9]},
+                {label: "Hukify", data: [4.7, 4.7, 4.7, 4.7, 4.7, 4.7, 4.7, 4.7]}
+            ]
+        };
+        
+        var ctx1 = document.getElementById('multi-line-chart1').getContext('2d');
+        var chart1 = new Chart(ctx1, {
             type: 'line',
-            data: {
-                labels: ["Dece 23 2024","Dece 30 2024","Janv 6 2025","2025-01-12T23:00:00.000Z","2025-01-19T23:00:00.000Z","2025-01-26T23:00:00.000Z","2025-02-02T23:00:00.000Z","2025-02-09T23:00:00.000Z"],
-                datasets: [{"label":"Easy Catalog: Wholesale/Retail","data":[4.5,4.6,4.7,4.6,4.6,4.6,4.6,4.6]},
-                           {"label":"Catalog Maker by Now in Store","data":[4.1,4.1,4.1,4.1,4.1,4.1,4,4]},
-                           {"label":"Catalogly: PDF Catalogs","data":[4.9,4.9,5,5,5,5,5,5]},
-                           {"label":"Ace Catalog Maker: PDF Catalog","data":[4.2,4.9,4.8,4.8,4.8,4.8,4.8,4.8]},
-                           {"label":"Catalog Machine","data":[3.9,3.9,3.9,3.9,3.9,3.9,3.9,3.9]},
-                           {"label":"Hukify","data":[4.7,4.7,4.7,4.7,4.7,4.7,4.7,4.7]}],
-            },
+            data: reviews,
             options: {
-                layout: {
-                  padding: {
-                    right: 10
-                  }
-                },
+                responsive: true,
+                maintainAspectRatio: false,
                 plugins: {
                     legend: {
                         position: 'right',
-                    }
+                    },
                 },
-                scales: {
-                    y: {
-                        beginAtZero: false
-                    }
-                }
-            }
+            },
+        });
+        
+        var ctx2 = document.getElementById('multi-line-chart2').getContext('2d');
+        var chart2 = new Chart(ctx2, {
+            type: 'line',
+            data: ratings,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'right',
+                    },
+                },
+            },
         });
     </script>
 </body>
 </html>
 ```
+
+This HTML file should generate two multi-line charts using your provided data, using chart.js. The first chart displays the evolution of total reviews over time for different categories, and the second chart displays the evolution of average ratings over time for the same categories. Each line in the charts represents a different category and is color coded by default in chart.js. The legend is on the right and identifies each category.
