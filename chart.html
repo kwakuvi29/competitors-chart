@@ -1,12 +1,18 @@
-Sure, here is your HTML, CSS, and JavaScript code using Chart.js to generate a multi-line chart as per your requirements:
-
-```html
 <!DOCTYPE html>
 <html>
 <head>
     <title>Multi-line Chart</title>
     <style>
-        canvas{
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .chart-container {
+            width: 80%;
+            max-width: 1200px;
+            margin: auto;
+        }
+        canvas {
             -moz-user-select: none;
             -webkit-user-select: none;
             -ms-user-select: none;
@@ -15,55 +21,106 @@ Sure, here is your HTML, CSS, and JavaScript code using Chart.js to generate a m
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <div style="width:75%;">
-        <canvas id="canvas"></canvas>
+    <h2>Reviews Comparison Over Time</h2>
+    <div class="chart-container">
+        <canvas id="chartCanvas"></canvas>
     </div>
-    <br>
-    <br>
+
     <script>
         var chartData = {
-            "labels":["Dece 23 2024","Dece 30 2024","Janv 6 2025","2025-01-12T23:00:00.000Z","2025-01-19T23:00:00.000Z","2025-01-26T23:00:00.000Z","2025-02-02T23:00:00.000Z","2025-02-09T23:00:00.000Z"],
-            "datasets":[
-                {"label":"Easy Catalog: Wholesale/Retail","data":[158,158,160,164,164,165,158,165]},
-                {"label":"Catalog Maker by Now in Store","data":[175,175,175,175,177,177,175,178]},
-                {"label":"Catalogly: PDF Catalogs","data":[15,"","#REF!","","","",15,""]},
-                {"label":"Ace Catalog Maker: PDF Catalog","data":[75,75,75,76,79,81,75,81]},
-                {"label":"Catalog Machine","data":[27,27,27,27,27,27,27,27]},
-                {"label":"Hukify","data":[106,106,106,106,106,106,106,106]}
-            ]};
+            labels: ["Dec 23 2024", "Dec 30 2024", "Jan 6 2025", "Jan 13 2025", "Jan 20 2025", "Jan 27 2025", "Feb 3 2025", "Feb 10 2025"],
+            datasets: [
+                {
+                    label: "Easy Catalog: Wholesale/Retail",
+                    data: [158, 158, 160, 164, 164, 165, 158, 165],
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    tension: 0.4
+                },
+                {
+                    label: "Catalog Maker by Now in Store",
+                    data: [175, 175, 175, 175, 177, 177, 175, 178],
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    tension: 0.4
+                },
+                {
+                    label: "Catalogly: PDF Catalogs",
+                    data: [15, null, null, null, null, null, 15, null], 
+                    borderColor: 'rgba(153, 102, 255, 1)',
+                    backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                    tension: 0.4
+                },
+                {
+                    label: "Ace Catalog Maker: PDF Catalog",
+                    data: [75, 75, 75, 76, 79, 81, 75, 81],
+                    borderColor: 'rgba(255, 159, 64, 1)',
+                    backgroundColor: 'rgba(255, 159, 64, 0.2)',
+                    tension: 0.4
+                },
+                {
+                    label: "Catalog Machine",
+                    data: [27, 27, 27, 27, 27, 27, 27, 27],
+                    borderColor: 'rgba(255, 206, 86, 1)',
+                    backgroundColor: 'rgba(255, 206, 86, 0.2)',
+                    tension: 0.4
+                },
+                {
+                    label: "Hukify",
+                    data: [106, 106, 106, 106, 106, 106, 106, 106],
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    tension: 0.4
+                }
+            ]
+        };
 
         window.onload = function() {
-            var ctx = document.getElementById('canvas').getContext('2d');
-            window.myLine = new Chart(ctx, {
+            var ctx = document.getElementById('chartCanvas').getContext('2d');
+            new Chart(ctx, {
                 type: 'line',
                 data: chartData,
                 options: {
                     responsive: true,
-                    tooltips: {
-                        mode: 'index',
-                        intersect: false,
-                    },
-                    hover: {
-                        mode: 'nearest',
-                        intersect: true
-                    },
-                    scales: {
-                        x : {
-                            title: {
-                                display: true,
-                                text: 'Weeks'
-                            }
-                        },
-                        y : {
-                            title: {
-                                display: true,
-                                text: 'Number of Reviews'
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                font: {
+                                    size: 14
+                                }
                             }
                         }
                     },
-                    plugins: {
-                        legend: {
-                            position: 'right',
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Weeks',
+                                font: {
+                                    size: 16
+                                }
+                            },
+                            ticks: {
+                                font: {
+                                    size: 14
+                                }
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Number of Reviews',
+                                font: {
+                                    size: 16
+                                }
+                            },
+                            ticks: {
+                                font: {
+                                    size: 14
+                                }
+                            }
                         }
                     }
                 }
@@ -72,8 +129,3 @@ Sure, here is your HTML, CSS, and JavaScript code using Chart.js to generate a m
     </script>
 </body>
 </html>
-```
-
-This code produces a chart that tracks the evolution of different categories over time, using Chart.js. Each line, color-coded to a legend on the right, represents a different category. The x-axis represents time (in weeks), while the y-axis denotes the number of reviews. The chart data is encoded into a JavaScript object for easy reference.
-
-Note: Please replace `"#REF!"` with numerical values or `null` to avoid any errors. Dates in `YYYY-MM-DDTHH:MM:SS.SSSZ` format will be converted to Unix timestamp by Chart.js. If you want dates in a human-readable format, please format them before supplying to the chart data.
