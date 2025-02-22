@@ -1,82 +1,79 @@
-Sure, here is the HTML, CSS, and JavaScript code using Chart.js:
+Sure, here is your HTML, CSS, and JavaScript code using Chart.js to generate a multi-line chart as per your requirements:
 
 ```html
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Multi-Line Chart</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<head>
+    <title>Multi-line Chart</title>
     <style>
-      #chart-container {
-        width: 80%;
-        height: 80%;
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        margin: auto;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="chart-container">
-      <canvas id="myChart"></canvas>
-    </div>
-    <script>
-      var ctx = document.getElementById('myChart').getContext('2d');
-      new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: ["Dec 23 2024", "Dec 30 2024", "Jan 6 2025",
-                   "2025-01-12T23:00:00.000Z", "2025-01-19T23:00:00.000Z",
-                   "2025-01-26T23:00:00.000Z", "2025-02-02T23:00:00.000Z",
-                   "2025-02-09T23:00:00.000Z"],
-          datasets: [{
-            label: "Easy Catalog: Wholesale/Retail",
-            data: [158,158,160,164,164,165,158,165],
-            borderColor: 'rgb(255, 99, 132)',
-            fill: false
-          },{
-            label: "Catalog Maker by Now in Store",
-            data: [175,175,175,175,177,177,175,178],
-            borderColor: 'rgb(54, 162, 235)',
-            fill: false
-          },{
-            label: "Catalogly: PDF Catalogs",
-            data: [15,0,0,0,0,0,15,0],
-            borderColor: 'rgb(255, 206, 86)',
-            fill: false
-          },{
-            label: "Ace Catalog Maker: PDF Catalog",
-            data: [75,75,75,76,79,81,75,81],
-            borderColor: 'rgb(75, 192, 192)',
-            fill: false
-          },{
-            label: "Catalog Machine",
-            data: [27,27,27,27,27,27,27,27],
-            borderColor: 'rgb(153, 102, 255)',
-            fill: false
-          },{
-            label: "Hukify",
-            data: [106,106,106,106,106,106,106,106],
-            borderColor: 'rgb(255, 159, 64)',
-            fill: false
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          legend: { position: 'right' },
-          scales: {
-            xAxes: [{ display: true, scaleLabel: { display: true, labelString: 'Time' } }],
-            yAxes: [{ display: true, scaleLabel: { display: true, labelString: 'Values' } }],
-          }
+        canvas{
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
         }
-      });
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div style="width:75%;">
+        <canvas id="canvas"></canvas>
+    </div>
+    <br>
+    <br>
+    <script>
+        var chartData = {
+            "labels":["Dece 23 2024","Dece 30 2024","Janv 6 2025","2025-01-12T23:00:00.000Z","2025-01-19T23:00:00.000Z","2025-01-26T23:00:00.000Z","2025-02-02T23:00:00.000Z","2025-02-09T23:00:00.000Z"],
+            "datasets":[
+                {"label":"Easy Catalog: Wholesale/Retail","data":[158,158,160,164,164,165,158,165]},
+                {"label":"Catalog Maker by Now in Store","data":[175,175,175,175,177,177,175,178]},
+                {"label":"Catalogly: PDF Catalogs","data":[15,"","#REF!","","","",15,""]},
+                {"label":"Ace Catalog Maker: PDF Catalog","data":[75,75,75,76,79,81,75,81]},
+                {"label":"Catalog Machine","data":[27,27,27,27,27,27,27,27]},
+                {"label":"Hukify","data":[106,106,106,106,106,106,106,106]}
+            ]};
+
+        window.onload = function() {
+            var ctx = document.getElementById('canvas').getContext('2d');
+            window.myLine = new Chart(ctx, {
+                type: 'line',
+                data: chartData,
+                options: {
+                    responsive: true,
+                    tooltips: {
+                        mode: 'index',
+                        intersect: false,
+                    },
+                    hover: {
+                        mode: 'nearest',
+                        intersect: true
+                    },
+                    scales: {
+                        x : {
+                            title: {
+                                display: true,
+                                text: 'Weeks'
+                            }
+                        },
+                        y : {
+                            title: {
+                                display: true,
+                                text: 'Number of Reviews'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                        }
+                    }
+                }
+            });
+        };
     </script>
-  </body>
+</body>
 </html>
 ```
 
-This code creates a fullscreen multi-line chart with a legend on the right. Each category is represented by a distinct color. The X axis represents time in weeks, and the Y axis represents values. The chart is responsive and will resize according to the screen size. The chart is kept clean and modern looking with a simple white background. The "fill" option is set to "false" ensuring a clean, line-only chart. Note that for "Catalogly: PDF Catalogs", non-numerical values are replaced with zeroes to keep the consistency of the chart.
+This code produces a chart that tracks the evolution of different categories over time, using Chart.js. Each line, color-coded to a legend on the right, represents a different category. The x-axis represents time (in weeks), while the y-axis denotes the number of reviews. The chart data is encoded into a JavaScript object for easy reference.
+
+Note: Please replace `"#REF!"` with numerical values or `null` to avoid any errors. Dates in `YYYY-MM-DDTHH:MM:SS.SSSZ` format will be converted to Unix timestamp by Chart.js. If you want dates in a human-readable format, please format them before supplying to the chart data.
