@@ -2,60 +2,64 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Line Chart Example</title>
-	<style>
-		canvas{
-			width: 400px !important;
-			height: 200px !important;
-		}
-	</style>
-	<script src="https://cdn.jsdelivr.net/npm/chart.js@3"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style> 
+    canvas { 
+        width: 80vw;
+        height: 40vh;
+    }
+    div {
+        margin-bottom: 2em;
+    }
+</style>
 </head>
 <body>
-	<canvas id="chart1"></canvas>
-	<canvas id="chart2"></canvas>
+    <div>
+        <canvas id="reviewsChart"></canvas>
+    </div>
+    <div>
+        <canvas id="ratingsChart"></canvas>
+    </div>
 
-	<script>
-		const chart1Data = {"labels":["Janv 6 2025","2025-01-12T23:00:00.000Z","2025-01-19T23:00:00.000Z","2025-01-26T23:00:00.000Z","2025-02-02T23:00:00.000Z","2025-02-09T23:00:00.000Z","2025-02-16T23:00:00.000Z","2025-02-23T23:00:00.000Z"],"datasets":[{"label":"Easy Catalog: Wholesale/Retail","data":[160,164,164,165,165,165,167,168]},{"label":"Catalog Maker by Now in Store","data":[175,175,177,177,178,178,178,178]},{"label":"Catalogly: PDF Catalogs","data":[17,17,17,18,18,18,18,18]},{"label":"Ace Catalog Maker: PDF Catalog","data":[75,76,79,81,81,81,85,88]},{"label":"Catalog Machine","data":[27,27,27,27,27,27,27,27]},{"label":"Hukify","data":[106,106,106,106,106,106,106,108]}]};
-		
-		const chart2Data = {"labels":["Janv 6 2025","2025-01-12T23:00:00.000Z","2025-01-19T23:00:00.000Z","2025-01-26T23:00:00.000Z","2025-02-02T23:00:00.000Z","2025-02-09T23:00:00.000Z","2025-02-16T23:00:00.000Z","2025-02-23T23:00:00.000Z"],"datasets":[{"label":"Easy Catalog: Wholesale/Retail","data":[4.7,4.6,4.6,4.6,4.6,4.6,4.6,4.5]},{"label":"Catalog Maker by Now in Store","data":[4.1,4.1,4.1,4.1,4,4,4,4]},{"label":"Catalogly: PDF Catalogs","data":[5,5,5,5,5,5,5,4.9]},{"label":"Ace Catalog Maker: PDF Catalog","data":[4.8,4.8,4.8,4.8,4.8,4.8,4.8,4.6]},{"label":"Catalog Machine","data":[3.9,3.9,3.9,3.9,3.9,3.9,3.9,4.1]},{"label":"Hukify","data":[4.7,4.7,4.7,4.7,4.7,4.7,4.7,4.8]}]};
+<script>
+var reviewData = {"labels":["Janv 6 2025","2025-01-12T23:00:00.000Z","2025-01-19T23:00:00.000Z","2025-01-26T23:00:00.000Z","2025-02-02T23:00:00.000Z","2025-02-09T23:00:00.000Z","2025-02-16T23:00:00.000Z","2025-02-23T23:00:00.000Z"],"datasets":[{"label":"Easy Catalog: Wholesale/Retail","data":[160,164,164,165,165,165,167,168]},{"label":"Catalog Maker by Now in Store","data":[175,175,177,177,178,178,178,178]},{"label":"Catalogly: PDF Catalogs","data":[17,17,17,18,18,18,18,18]},{"label":"Ace Catalog Maker: PDF Catalog","data":[75,76,79,81,81,81,85,88]},{"label":"Catalog Machine","data":[27,27,27,27,27,27,27,27]},{"label":"Hukify","data":[106,106,106,106,106,106,106,108]}]};
 
-		const config1 = {
-			type: 'line',
-			data: chart1Data,
-			options: {
-				plugins: {
-					legend: {
-						position: 'right',
-					}
-				}
-			}
-		};
+var ratingsData = {"labels":["Janv 6 2025","2025-01-12T23:00:00.000Z","2025-01-19T23:00:00.000Z","2025-01-26T23:00:00.000Z","2025-02-02T23:00:00.000Z","2025-02-09T23:00:00.000Z","2025-02-16T23:00:00.000Z","2025-02-23T23:00:00.000Z"],"datasets":[{"label":"Easy Catalog: Wholesale/Retail","data":[4.7,4.6,4.6,4.6,4.6,4.6,4.6,4.5]},{"label":"Catalog Maker by Now in Store","data":[4.1,4.1,4.1,4.1,4,4,4,4]},{"label":"Catalogly: PDF Catalogs","data":[5,5,5,5,5,5,5,4.9]},{"label":"Ace Catalog Maker: PDF Catalog","data":[4.8,4.8,4.8,4.8,4.8,4.8,4.8,4.6]},{"label":"Catalog Machine","data":[3.9,3.9,3.9,3.9,3.9,3.9,3.9,4.1]},{"label":"Hukify","data":[4.7,4.7,4.7,4.7,4.7,4.7,4.7,4.8]}]};
 
-		const config2 = {
-			type: 'line',
-			data: chart2Data,
-			options: {
-				plugins: {
-					legend: {
-						position: 'right',
-					}
-				}
-			}
-		};
+var reviewCtx = document.getElementById('reviewsChart').getContext('2d');
+var ratingsCtx = document.getElementById('ratingsChart').getContext('2d');
 
-		const chart1 = new Chart(
-			document.getElementById('chart1'),
-			config1
-		);
+new Chart(reviewCtx, {
+    type: 'line',
+    data: reviewData,
+    options: {
+        responsive: true,
+        plugins: {
+            legend: { position: 'right' },
+        },
+        scales: {
+            x: { title: { text: 'Weeks', display: true }},
+            y: { title: { text: 'Total reviews', display: true }},
+        },
+    }
+});
 
-		const chart2 = new Chart(
-			document.getElementById('chart2'),
-			config2
-		);
-	</script>
+new Chart(ratingsCtx, {
+    type: 'line',
+    data: ratingsData,
+    options: {
+        responsive: true,
+        plugins: {
+            legend: { position: 'right' },
+        },
+        scales: {
+            x: { title: { text: 'Weeks', display: true }},
+            y: { title: { text: 'Average ratings', display: true }},
+        },
+    }
+});
+</script>
+
 </body>
 </html>
 ```
-
-Please note: you need to host this HTML file on a server to allow cross-origin requests to access Chart.js library. Alternatively, you can download the Chart.js file and refer to it locally in your HTML file.
