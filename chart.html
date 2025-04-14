@@ -1,74 +1,115 @@
-Here is the HTML page containing the charts. Since you've decided to use Chart.js, this snippet also includes a reference to that library.
-
 ```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Charts</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        .chart-container {
-            width: 60%;
-            height: 50vh;
-            margin: auto;
-            padding: 1rem;
-        }
-    </style>
-</head>
-<body>
+<!doctype html>
+<html>
 
-    <div class="chart-container">
-        <canvas id="reviewChart"></canvas>
-    </div>
-    <div class="chart-container">
-        <canvas id="ratingChart"></canvas>
+<head>
+    <title>Multi Line Charts</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+        <div>
+            <canvas id="totalsChart"></canvas>
+            <canvas id="averageRatingsChart"></canvas>
+        </div>
     </div>
 
     <script>
-        var reviewData = {"labels":["Janv 6 2025","2025-01-12T23:00:00.000Z","2025-01-19T23:00:00.000Z","2025-01-26T23:00:00.000Z","2025-02-02T23:00:00.000Z","2025-02-09T23:00:00.000Z","2025-02-16T23:00:00.000Z","2025-02-23T23:00:00.000Z"],"datasets":[{"label":"Easy Catalog: Wholesale/Retail","data":[160,164,164,165,165,165,167,168]},{"label":"Catalog Maker by Now in Store","data":[175,175,177,177,178,178,178,178]},{"label":"Catalogly: PDF Catalogs","data":[17,17,17,18,18,18,18,18]},{"label":"Ace Catalog Maker: PDF Catalog","data":[75,76,79,81,81,81,85,88]},{"label":"Catalog Machine","data":[27,27,27,27,27,27,27,27]},{"label":"Hukify","data":[106,106,106,106,106,106,106,108]}]};
-        var ratingData = {"labels":["Janv 6 2025","2025-01-12T23:00:00.000Z","2025-01-19T23:00:00.000Z","2025-01-26T23:00:00.000Z","2025-02-02T23:00:00.000Z","2025-02-09T23:00:00.000Z","2025-02-16T23:00:00.000Z","2025-02-23T23:00:00.000Z"],"datasets":[{"label":"Easy Catalog: Wholesale/Retail","data":[4.7,4.6,4.6,4.6,4.6,4.6,4.6,4.5]},{"label":"Catalog Maker by Now in Store","data":[4.1,4.1,4.1,4.1,4,4,4,4]},{"label":"Catalogly: PDF Catalogs","data":[5,5,5,5,5,5,5,4.9]},{"label":"Ace Catalog Maker: PDF Catalog","data":[4.8,4.8,4.8,4.8,4.8,4.8,4.8,4.6]},{"label":"Catalog Machine","data":[3.9,3.9,3.9,3.9,3.9,3.9,3.9,4.1]},{"label":"Hukify","data":[4.7,4.7,4.7,4.7,4.7,4.7,4.7,4.8]}]};
+        const reviewsData = {
+            labels: ["2025-02-16T23:00:00.000Z", "2025-02-23T23:00:00.000Z", "2025-03-02T23:00:00.000Z", "2025-03-09T23:00:00.000Z", "2025-03-16T23:00:00.000Z", "2025-03-23T23:00:00.000Z", "2025-03-30T22:00:00.000Z", "2025-04-06T22:00:00.000Z"],
+            datasets: [{
+                label: "Easy Catalog: Wholesale/Retail",
+                data: [167, 168, 168, 168, 169, 169, 171, 171],
+                borderColor: 'rgba(75,192,192,1)'
+            }, {
+                label: "Catalog Maker by Now in Store",
+                data: [178, 178, 179, 179, 179, 179, 180, 180],
+                borderColor: 'rgba(255,99,132,1)'
+            }, {
+                label: "Catalogly: PDF Catalogs",
+                data: [18, 18, 18, 18, 18, 18, 19, 19],
+                borderColor: 'rgba(255,206,86,1)'
+            }, {
+                label: "Ace Catalog Maker: PDF Catalog",
+                data: [85, 88, 88, 86, 85, 86, 89, 89],
+                borderColor: 'rgba(153,102,255,1)'
+            }, {
+                label: "Catalog Machine",
+                data: [27, 27, 27, 27, 27, 27, 27, 27],
+                borderColor: 'rgba(255,159,64,1)'
+            }, {
+                label: "Hukify",
+                data: [106, 108, 108, 108, 108, 108, 108, 108],
+                borderColor: 'rgba(54,162,235,1)'
+            }]
+        };
 
-        new Chart(document.getElementById('reviewChart'), {
+        const ratingsData = {
+            labels: ["2025-02-16T23:00:00.000Z", "2025-02-23T23:00:00.000Z", "2025-03-02T23:00:00.000Z", "2025-03-09T23:00:00.000Z", "2025-03-16T23:00:00.000Z", "2025-03-23T23:00:00.000Z", "2025-03-30T22:00:00.000Z", "2025-04-06T22:00:00.000Z"],
+            datasets: [{
+                label: "Easy Catalog: Wholesale/Retail",
+                data: [4.6, 4.5, 4.7, 4.7, 4.7, 4.7, 4.7, 4.5],
+                borderColor: 'rgba(75,192,192,1)'
+            }, {
+                label: "Catalog Maker by Now in Store",
+                data: [4, 4, 4, 4, 4, 4, 4, 4],
+                borderColor: 'rgba(255,99,132,1)'
+            }, {
+                label: "Catalogly: PDF Catalogs",
+                data: [5, 4.9, 4.9, 4.9, 4.9, 4.9, 5, 4.9],
+                borderColor: 'rgba(255,206,86,1)'
+            }, {
+                label: "Ace Catalog Maker: PDF Catalog",
+                data: [4.8, 4.6, 4.6, 4.7, 4.8, 4.8, 4.8, 4.8],
+                borderColor: 'rgba(153,102,255,1)'
+            }, {
+                label: "Catalog Machine",
+                data: [3.9, 4.1, 4.1, 4.1, 4.1, 4.1, 4.1, 4.1],
+                borderColor: 'rgba(255,159,64,1)'
+            }, {
+                label: "Hukify",
+                data: [4.7, 4.8, 4.8, 4.8, 4.8, 4.8, 4.8, 4.8],
+                borderColor: 'rgba(54,162,235,1)'
+            }],
+        };
+
+        const config = {
             type: 'line',
-            data: reviewData,
+            data: reviewsData,
             options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'right',
-                    },
-                    title: {
-                        display: true,
-                        text: 'Evolution of total reviews over time'
+                legend: {
+                    position: 'right',
+                },
+                elements: {
+                    point:{
+                        radius: 0
+                    }
+                },
+                scales: {
+                    x: {
+                        type: 'time',
+                        time: {
+                            unit: 'week'
+                        }
                     }
                 }
-            }
-        });
+            },
+        };
 
-        new Chart(document.getElementById('ratingChart'), {
-            type: 'line',
-            data: ratingData,
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'right',
-                    },
-                    title: {
-                        display: true,
-                        text: 'Evolution of average ratings over time'
-                    }
-                }
-            }
-        });
+        const config2 = Object.assign({}, config, { data: ratingsData })
 
+        var myChart = new Chart(
+            document.getElementById('totalsChart'),
+            config
+        );
+
+        var myChart = new Chart(
+            document.getElementById('averageRatingsChart'),
+            config2
+        );
     </script>
 </body>
+
 </html>
 ```
-
-This script should create two charts. One for the evolution of total reviews over time and the other one for the evolution of average ratings over time.
-
-The datasets for the charts are extracted from the JSON object and passed into the Chart.js configuration. The legend for each chart is set to appear on the right side, as required.
