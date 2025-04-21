@@ -1,115 +1,94 @@
 ```html
-<!doctype html>
+<!DOCTYPE html>
 <html>
-
 <head>
-    <title>Multi Line Charts</title>
+    <title>Interactive Charts using Chart.js</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        canvas {
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+        }
+    </style>
 </head>
-
 <body>
-    <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
-        <div>
-            <canvas id="totalsChart"></canvas>
-            <canvas id="averageRatingsChart"></canvas>
-        </div>
+    <div style="width:75%;">
+        <canvas id="reviews_chart"></canvas>
+        <canvas id="ratings_chart"></canvas>
     </div>
 
     <script>
-        const reviewsData = {
-            labels: ["2025-02-16T23:00:00.000Z", "2025-02-23T23:00:00.000Z", "2025-03-02T23:00:00.000Z", "2025-03-09T23:00:00.000Z", "2025-03-16T23:00:00.000Z", "2025-03-23T23:00:00.000Z", "2025-03-30T22:00:00.000Z", "2025-04-06T22:00:00.000Z"],
-            datasets: [{
-                label: "Easy Catalog: Wholesale/Retail",
-                data: [167, 168, 168, 168, 169, 169, 171, 171],
-                borderColor: 'rgba(75,192,192,1)'
-            }, {
-                label: "Catalog Maker by Now in Store",
-                data: [178, 178, 179, 179, 179, 179, 180, 180],
-                borderColor: 'rgba(255,99,132,1)'
-            }, {
-                label: "Catalogly: PDF Catalogs",
-                data: [18, 18, 18, 18, 18, 18, 19, 19],
-                borderColor: 'rgba(255,206,86,1)'
-            }, {
-                label: "Ace Catalog Maker: PDF Catalog",
-                data: [85, 88, 88, 86, 85, 86, 89, 89],
-                borderColor: 'rgba(153,102,255,1)'
-            }, {
-                label: "Catalog Machine",
-                data: [27, 27, 27, 27, 27, 27, 27, 27],
-                borderColor: 'rgba(255,159,64,1)'
-            }, {
-                label: "Hukify",
-                data: [106, 108, 108, 108, 108, 108, 108, 108],
-                borderColor: 'rgba(54,162,235,1)'
-            }]
-        };
+        var reviewsData = {"labels":["2025-02-16T23:00:00.000Z","2025-02-23T23:00:00.000Z","2025-03-02T23:00:00.000Z","2025-03-09T23:00:00.000Z","2025-03-16T23:00:00.000Z","2025-03-23T23:00:00.000Z","2025-03-30T22:00:00.000Z","2025-04-06T22:00:00.000Z"],"datasets":[{"label":"Easy Catalog: Wholesale/Retail","data":[167,168,168,168,169,169,171,171]}, {"label":"Catalog Maker by Now in Store","data":[178,178,179,179,179,179,180,180]}, {"label":"Catalogly: PDF Catalogs","data":[18,18,18,18,18,18,19,19]}, {"label":"Ace Catalog Maker: PDF Catalog", "data":[85,88,88,86,85,86,89,89]}, {"label":"Catalog Machine", "data":[27,27,27,27,27,27,27,27]}, {"label":"Hukify","data":[106,108,108,108,108,108,108,108]}]};
 
-        const ratingsData = {
-            labels: ["2025-02-16T23:00:00.000Z", "2025-02-23T23:00:00.000Z", "2025-03-02T23:00:00.000Z", "2025-03-09T23:00:00.000Z", "2025-03-16T23:00:00.000Z", "2025-03-23T23:00:00.000Z", "2025-03-30T22:00:00.000Z", "2025-04-06T22:00:00.000Z"],
-            datasets: [{
-                label: "Easy Catalog: Wholesale/Retail",
-                data: [4.6, 4.5, 4.7, 4.7, 4.7, 4.7, 4.7, 4.5],
-                borderColor: 'rgba(75,192,192,1)'
-            }, {
-                label: "Catalog Maker by Now in Store",
-                data: [4, 4, 4, 4, 4, 4, 4, 4],
-                borderColor: 'rgba(255,99,132,1)'
-            }, {
-                label: "Catalogly: PDF Catalogs",
-                data: [5, 4.9, 4.9, 4.9, 4.9, 4.9, 5, 4.9],
-                borderColor: 'rgba(255,206,86,1)'
-            }, {
-                label: "Ace Catalog Maker: PDF Catalog",
-                data: [4.8, 4.6, 4.6, 4.7, 4.8, 4.8, 4.8, 4.8],
-                borderColor: 'rgba(153,102,255,1)'
-            }, {
-                label: "Catalog Machine",
-                data: [3.9, 4.1, 4.1, 4.1, 4.1, 4.1, 4.1, 4.1],
-                borderColor: 'rgba(255,159,64,1)'
-            }, {
-                label: "Hukify",
-                data: [4.7, 4.8, 4.8, 4.8, 4.8, 4.8, 4.8, 4.8],
-                borderColor: 'rgba(54,162,235,1)'
-            }],
-        };
+        var ratingsData = {"labels":["2025-02-16T23:00:00.000Z","2025-02-23T23:00:00.000Z","2025-03-02T23:00:00.000Z","2025-03-09T23:00:00.000Z","2025-03-16T23:00:00.000Z","2025-03-23T23:00:00.000Z","2025-03-30T22:00:00.000Z","2025-04-06T22:00:00.000Z"],"datasets":[{"label":"Easy Catalog: Wholesale/Retail","data":[4.6,4.5,4.7,4.7,4.7,4.7,4.7,4.5]}, {"label":"Catalog Maker by Now in Store","data":[4,4,4,4,4,4,4,4]}, {"label":"Catalogly: PDF Catalogs","data":[5,4.9,4.9,4.9,4.9,4.9,5,4.9]}, {"label":"Ace Catalog Maker: PDF Catalog","data":[4.8,4.6,4.6,4.7,4.8,4.8,4.8,4.8]}, {"label":"Catalog Machine","data":[3.9,4.1,4.1,4.1,4.1,4.1,4.1,4.1]}, {"label":"Hukify","data":[4.7,4.8,4.8,4.8,4.8,4.8,4.8,4.8]}]};
 
-        const config = {
+
+        var reviewsCTX = document.getElementById('reviews_chart').getContext('2d');
+        new Chart(reviewsCTX, {
             type: 'line',
             data: reviewsData,
             options: {
-                legend: {
-                    position: 'right',
-                },
-                elements: {
-                    point:{
-                        radius: 0
-                    }
+                responsive: true,
+                title: {
+                    display: true,
+                    text: 'Evolution of Total Reviews Over Time'
                 },
                 scales: {
                     x: {
-                        type: 'time',
-                        time: {
-                            unit: 'week'
+                        display: true,
+                        title: {
+                            display: true
+                        }
+                    },
+                    y: {
+                        display: true,
+                        title: {
+                            display: true
                         }
                     }
+                },
+                plugins: {
+                    legend: {
+                        position: 'right',
+                    }
                 }
-            },
-        };
+            }
+        });
 
-        const config2 = Object.assign({}, config, { data: ratingsData })
-
-        var myChart = new Chart(
-            document.getElementById('totalsChart'),
-            config
-        );
-
-        var myChart = new Chart(
-            document.getElementById('averageRatingsChart'),
-            config2
-        );
+        var ratingsCTX = document.getElementById('ratings_chart').getContext('2d');
+        new Chart(ratingsCTX, {
+            type: 'line',
+            data: ratingsData,
+            options: {
+                responsive: true,
+                title: {
+                    display: true,
+                    text: 'Evolution of Average Ratings Over Time'
+                },
+                scales: {
+                    x: {
+                        display: true,
+                        title: {
+                            display: true
+                        }
+                    },
+                    y: {
+                        display: true,
+                        title: {
+                            display: true
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'right',
+                    }
+                }
+            }
+        });
     </script>
 </body>
-
 </html>
 ```
+In this code, two line charts are created. The first shows the evolution of total reviews over time, and the second shows the evolution of average ratings over time. A different color is used for each category, and each color is noted in the legend on the right side of each chart. The x-axis represents dates (weeks), and the y-axis represents numerical values.
