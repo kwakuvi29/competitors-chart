@@ -1,94 +1,64 @@
+Here's your HTML file that includes the JavaScript code to create the two requested multi-line charts using Chart.js. Please save this code as an HTML file and open it in your web browser to see the result:
+
 ```html
-<!DOCTYPE html>
+<!doctype html>
 <html>
 <head>
-    <title>Interactive Charts using Chart.js</title>
+    <title>Multi-Line Chart</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        canvas {
-            -moz-user-select: none;
-            -webkit-user-select: none;
-            -ms-user-select: none;
+        #container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        .chart-container {
+            width: 50%;
+            min-width: 300px;
         }
     </style>
 </head>
 <body>
-    <div style="width:75%;">
-        <canvas id="reviews_chart"></canvas>
-        <canvas id="ratings_chart"></canvas>
+<div id="container">
+    <div class="chart-container">
+        <canvas id="reviewsChart"></canvas>
     </div>
+    <div class="chart-container">
+        <canvas id="ratingsChart"></canvas>
+    </div>
+</div>
 
-    <script>
-        var reviewsData = {"labels":["2025-02-16T23:00:00.000Z","2025-02-23T23:00:00.000Z","2025-03-02T23:00:00.000Z","2025-03-09T23:00:00.000Z","2025-03-16T23:00:00.000Z","2025-03-23T23:00:00.000Z","2025-03-30T22:00:00.000Z","2025-04-06T22:00:00.000Z"],"datasets":[{"label":"Easy Catalog: Wholesale/Retail","data":[167,168,168,168,169,169,171,171]}, {"label":"Catalog Maker by Now in Store","data":[178,178,179,179,179,179,180,180]}, {"label":"Catalogly: PDF Catalogs","data":[18,18,18,18,18,18,19,19]}, {"label":"Ace Catalog Maker: PDF Catalog", "data":[85,88,88,86,85,86,89,89]}, {"label":"Catalog Machine", "data":[27,27,27,27,27,27,27,27]}, {"label":"Hukify","data":[106,108,108,108,108,108,108,108]}]};
 
-        var ratingsData = {"labels":["2025-02-16T23:00:00.000Z","2025-02-23T23:00:00.000Z","2025-03-02T23:00:00.000Z","2025-03-09T23:00:00.000Z","2025-03-16T23:00:00.000Z","2025-03-23T23:00:00.000Z","2025-03-30T22:00:00.000Z","2025-04-06T22:00:00.000Z"],"datasets":[{"label":"Easy Catalog: Wholesale/Retail","data":[4.6,4.5,4.7,4.7,4.7,4.7,4.7,4.5]}, {"label":"Catalog Maker by Now in Store","data":[4,4,4,4,4,4,4,4]}, {"label":"Catalogly: PDF Catalogs","data":[5,4.9,4.9,4.9,4.9,4.9,5,4.9]}, {"label":"Ace Catalog Maker: PDF Catalog","data":[4.8,4.6,4.6,4.7,4.8,4.8,4.8,4.8]}, {"label":"Catalog Machine","data":[3.9,4.1,4.1,4.1,4.1,4.1,4.1,4.1]}, {"label":"Hukify","data":[4.7,4.8,4.8,4.8,4.8,4.8,4.8,4.8]}]};
+<script type="text/javascript">
+    window.onload = function() {
+        const reviewsData = {
+            labels: ["2025-02-16T23:00:00.000Z","2025-02-23T23:00:00.000Z","2025-03-02T23:00:00.000Z","2025-03-09T23:00:00.000Z","2025-03-16T23:00:00.000Z","2025-03-23T23:00:00.000Z","2025-03-30T22:00:00.000Z","2025-04-06T22:00:00.000Z"],
+            datasets: [{"label":"Easy Catalog: Wholesale/Retail","data":[167,168,168,168,169,169,171,171]},{"label":"Catalog Maker by Now in Store","data":[178,178,179,179,179,179,180,180]},{"label":"Catalogly: PDF Catalogs","data":[18,18,18,18,18,18,19,19]},{"label":"Ace Catalog Maker: PDF Catalog","data":[85,88,88,86,85,86,89,89]},{"label":"Catalog Machine","data":[27,27,27,27,27,27,27,27]},{"label":"Hukify","data":[106,108,108,108,108,108,108,108]}]
+        };
 
+        const ratingsData = {
+            labels: ["2025-02-16T23:00:00.000Z","2025-02-23T23:00:00.000Z","2025-03-02T23:00:00.000Z","2025-03-09T23:00:00.000Z","2025-03-16T23:00:00.000Z","2025-03-23T23:00:00.000Z","2025-03-30T22:00:00.000Z","2025-04-06T22:00:00.000Z"],
+            datasets: [{"label":"Easy Catalog: Wholesale/Retail","data":[4.6,4.5,4.7,4.7,4.7,4.7,4.7,4.5]},{"label":"Catalog Maker by Now in Store","data":[4,4,4,4,4,4,4,4]},{"label":"Catalogly: PDF Catalogs","data":[5,4.9,4.9,4.9,4.9,4.9,5,4.9]},{"label":"Ace Catalog Maker: PDF Catalog","data":[4.8,4.6,4.6,4.7,4.8,4.8,4.8,4.8]},{"label":"Catalog Machine","data":[3.9,4.1,4.1,4.1,4.1,4.1,4.1,4.1]},{"label":"Hukify","data":[4.7,4.8,4.8,4.8,4.8,4.8,4.8,4.8]}]
+        };
 
-        var reviewsCTX = document.getElementById('reviews_chart').getContext('2d');
-        new Chart(reviewsCTX, {
+        var reviewsCtx = document.getElementById('reviewsChart').getContext('2d');
+        new Chart(reviewsCtx, {
             type: 'line',
             data: reviewsData,
-            options: {
-                responsive: true,
-                title: {
-                    display: true,
-                    text: 'Evolution of Total Reviews Over Time'
-                },
-                scales: {
-                    x: {
-                        display: true,
-                        title: {
-                            display: true
-                        }
-                    },
-                    y: {
-                        display: true,
-                        title: {
-                            display: true
-                        }
-                    }
-                },
-                plugins: {
-                    legend: {
-                        position: 'right',
-                    }
-                }
-            }
+            options: {responsiveness: true, plugins: {legend: {position: 'right'}}}
         });
 
-        var ratingsCTX = document.getElementById('ratings_chart').getContext('2d');
-        new Chart(ratingsCTX, {
+        var ratingsCtx = document.getElementById('ratingsChart').getContext('2d');
+        new Chart(ratingsCtx, {
             type: 'line',
             data: ratingsData,
-            options: {
-                responsive: true,
-                title: {
-                    display: true,
-                    text: 'Evolution of Average Ratings Over Time'
-                },
-                scales: {
-                    x: {
-                        display: true,
-                        title: {
-                            display: true
-                        }
-                    },
-                    y: {
-                        display: true,
-                        title: {
-                            display: true
-                        }
-                    }
-                },
-                plugins: {
-                    legend: {
-                        position: 'right',
-                    }
-                }
-            }
+            options: {responsiveness: true, plugins: {legend: {position: 'right'}}}
         });
-    </script>
+
+    }
+</script>
+
 </body>
 </html>
 ```
-In this code, two line charts are created. The first shows the evolution of total reviews over time, and the second shows the evolution of average ratings over time. A different color is used for each category, and each color is noted in the legend on the right side of each chart. The x-axis represents dates (weeks), and the y-axis represents numerical values.
+Hope this helps! Please let me know in case of any queries.
