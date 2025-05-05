@@ -1,64 +1,106 @@
-Here's your HTML file that includes the JavaScript code to create the two requested multi-line charts using Chart.js. Please save this code as an HTML file and open it in your web browser to see the result:
-
 ```html
-<!doctype html>
+<!DOCTYPE html>
 <html>
+
 <head>
-    <title>Multi-Line Chart</title>
+    <title>Charts</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        #container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-        }
-        .chart-container {
-            width: 50%;
-            min-width: 300px;
+        canvas {
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
         }
     </style>
 </head>
+
 <body>
-<div id="container">
-    <div class="chart-container">
+    <div>
         <canvas id="reviewsChart"></canvas>
-    </div>
-    <div class="chart-container">
         <canvas id="ratingsChart"></canvas>
     </div>
-</div>
-
-
-<script type="text/javascript">
-    window.onload = function() {
-        const reviewsData = {
-            labels: ["2025-02-16T23:00:00.000Z","2025-02-23T23:00:00.000Z","2025-03-02T23:00:00.000Z","2025-03-09T23:00:00.000Z","2025-03-16T23:00:00.000Z","2025-03-23T23:00:00.000Z","2025-03-30T22:00:00.000Z","2025-04-06T22:00:00.000Z"],
-            datasets: [{"label":"Easy Catalog: Wholesale/Retail","data":[167,168,168,168,169,169,171,171]},{"label":"Catalog Maker by Now in Store","data":[178,178,179,179,179,179,180,180]},{"label":"Catalogly: PDF Catalogs","data":[18,18,18,18,18,18,19,19]},{"label":"Ace Catalog Maker: PDF Catalog","data":[85,88,88,86,85,86,89,89]},{"label":"Catalog Machine","data":[27,27,27,27,27,27,27,27]},{"label":"Hukify","data":[106,108,108,108,108,108,108,108]}]
+    <script>
+        var reviews = {
+            labels: ["2025-02-16T23:00:00.000Z", "2025-02-23T23:00:00.000Z", "2025-03-02T23:00:00.000Z", "2025-03-09T23:00:00.000Z", "2025-03-16T23:00:00.000Z", "2025-03-23T23:00:00.000Z", "2025-03-30T22:00:00.000Z", "2025-04-06T22:00:00.000Z"],
+            datasets: [{
+                label: "Easy Catalog: Wholesale/Retail",
+                data: [167, 168, 168, 168, 169, 169, 171, 171]
+            }, {
+                label: "Catalog Maker by Now in Store",
+                data: [178, 178, 179, 179, 179, 179, 180, 180]
+            }, {
+                label: "Catalogly: PDF Catalogs",
+                data: [18, 18, 18, 18, 18, 18, 19, 19]
+            }, {
+                label: "Ace Catalog Maker: PDF Catalog",
+                data: [85, 88, 88, 86, 85, 86, 89, 89]
+            }, {
+                label: "Catalog Machine",
+                data: [27, 27, 27, 27, 27, 27, 27, 27]
+            }, {
+                label: "Hukify",
+                data: [106, 108, 108, 108, 108, 108, 108, 108]
+            }]
         };
 
-        const ratingsData = {
-            labels: ["2025-02-16T23:00:00.000Z","2025-02-23T23:00:00.000Z","2025-03-02T23:00:00.000Z","2025-03-09T23:00:00.000Z","2025-03-16T23:00:00.000Z","2025-03-23T23:00:00.000Z","2025-03-30T22:00:00.000Z","2025-04-06T22:00:00.000Z"],
-            datasets: [{"label":"Easy Catalog: Wholesale/Retail","data":[4.6,4.5,4.7,4.7,4.7,4.7,4.7,4.5]},{"label":"Catalog Maker by Now in Store","data":[4,4,4,4,4,4,4,4]},{"label":"Catalogly: PDF Catalogs","data":[5,4.9,4.9,4.9,4.9,4.9,5,4.9]},{"label":"Ace Catalog Maker: PDF Catalog","data":[4.8,4.6,4.6,4.7,4.8,4.8,4.8,4.8]},{"label":"Catalog Machine","data":[3.9,4.1,4.1,4.1,4.1,4.1,4.1,4.1]},{"label":"Hukify","data":[4.7,4.8,4.8,4.8,4.8,4.8,4.8,4.8]}]
+        var ratings = {
+            labels: ["2025-02-16T23:00:00.000Z", "2025-02-23T23:00:00.000Z", "2025-03-02T23:00:00.000Z", "2025-03-09T23:00:00.000Z", "2025-03-16T23:00:00.000Z", "2025-03-23T23:00:00.000Z", "2025-03-30T22:00:00.000Z", "2025-04-06T22:00:00.000Z"],
+            datasets: [{
+                label: "Easy Catalog: Wholesale/Retail",
+                data: [4.6, 4.5, 4.7, 4.7, 4.7, 4.7, 4.7, 4.5]
+            }, {
+                label: "Catalog Maker by Now in Store",
+                data: [4, 4, 4, 4, 4, 4, 4, 4]
+            }, {
+                label: "Catalogly: PDF Catalogs",
+                data: [5, 4.9, 4.9, 4.9, 4.9, 4.9, 5, 4.9]
+            }, {
+                label: "Ace Catalog Maker: PDF Catalog",
+                data: [4.8, 4.6, 4.6, 4.7, 4.8, 4.8, 4.8, 4.8]
+            }, {
+                label: "Catalog Machine",
+                data: [3.9, 4.1, 4.1, 4.1, 4.1, 4.1, 4.1, 4.1]
+            }, {
+                label: "Hukify",
+                data: [4.7, 4.8, 4.8, 4.8, 4.8, 4.8, 4.8, 4.8]
+            }]
         };
 
-        var reviewsCtx = document.getElementById('reviewsChart').getContext('2d');
-        new Chart(reviewsCtx, {
-            type: 'line',
-            data: reviewsData,
-            options: {responsiveness: true, plugins: {legend: {position: 'right'}}}
-        });
+        window.onload = function () {
+            var ctx1 = document.getElementById('reviewsChart').getContext('2d');
+            window.myLine = new Chart(ctx1, {
+                type: 'line',
+                data: reviews,
+                options: {
+                    responsive: true,
+                    legend: {
+                        position: 'right',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Evolution of total reviews over time'
+                    },
+                }
+            });
 
-        var ratingsCtx = document.getElementById('ratingsChart').getContext('2d');
-        new Chart(ratingsCtx, {
-            type: 'line',
-            data: ratingsData,
-            options: {responsiveness: true, plugins: {legend: {position: 'right'}}}
-        });
-
-    }
-</script>
-
+            var ctx2 = document.getElementById('ratingsChart').getContext('2d');
+            window.myLine = new Chart(ctx2, {
+                type: 'line',
+                data: ratings,
+                options: {
+                    responsive: true,
+                    legend: {
+                        position: 'right',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Evolution of average ratings over time'
+                    },
+                }
+            });
+        };
+    </script>
 </body>
+
 </html>
 ```
-Hope this helps! Please let me know in case of any queries.
