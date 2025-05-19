@@ -1,69 +1,91 @@
+Sure, I have prepared a simple HTML using Chart.js to visualize the given data. Here it is:
+
 ```html
-<!doctype html>
+<!DOCTYPE html>
 <html>
-
 <head>
-    <title>Multiline Charts</title>
+    <title>Multi-line Charts</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        canvas {
-            -moz-user-select: none;
-            -webkit-user-select: none;
-            -ms-user-select: none;
-        }
-    </style>
 </head>
-
 <body>
-    <div style="width:75%">
-        <canvas id="canvas1"></canvas>
-        <canvas id="canvas2"></canvas>
+    <div style="display: flex; justify-content: space-around;">
+        <canvas id="reviewsChart"></canvas>
+        <canvas id="ratingsChart"></canvas>
     </div>
+
     <script>
-        var data1 = {
-            "labels": ["2025-02-16T23:00:00.000Z", "2025-02-23T23:00:00.000Z", "2025-03-02T23:00:00.000Z", "2025-03-09T23:00:00.000Z", "2025-03-16T23:00:00.000Z", "2025-03-23T23:00:00.000Z", "2025-03-30T22:00:00.000Z", "2025-04-06T22:00:00.000Z"],
-            "datasets": [{"label": "Easy Catalog: Wholesale/Retail", "data": [167, 168, 168, 168, 169, 169, 171, 171]}, {"label": "Catalog Maker by Now in Store", "data": [178, 178, 179, 179, 179, 179, 180, 180]}, {"label": "Catalogly: PDF Catalogs", "data": [18, 18, 18, 18, 18, 18, 19, 19]}, {"label": "Ace Catalog Maker: PDF Catalog", "data": [85, 88, 88, 86, 85, 86, 89, 89]}, {"label": "Catalog Machine", "data": [27, 27, 27, 27, 27, 27, 27, 27]}, {"label": "Hukify", "data": [106, 108, 108, 108, 108, 108, 108, 108]}]
-        };
+        var reviewsData = {"labels":["2025-02-16T23:00:00.000Z","2025-02-23T23:00:00.000Z","2025-03-02T23:00:00.000Z","2025-03-09T23:00:00.000Z","2025-03-16T23:00:00.000Z","2025-03-23T23:00:00.000Z","2025-03-30T22:00:00.000Z","2025-04-06T22:00:00.000Z"],"datasets":[{"label":"Easy Catalog: Wholesale/Retail","data":[167,168,168,168,169,169,171,171]},{"label":"Catalog Maker by Now in Store","data":[178,178,179,179,179,179,180,180]},{"label":"Catalogly: PDF Catalogs","data":[18,18,18,18,18,18,19,19]},{"label":"Ace Catalog Maker: PDF Catalog","data":[85,88,88,86,85,86,89,89]},{"label":"Catalog Machine","data":[27,27,27,27,27,27,27,27]},{"label":"Hukify","data":[106,108,108,108,108,108,108,108]}]};
+        var ratingsData = {"labels":["2025-02-16T23:00:00.000Z","2025-02-23T23:00:00.000Z","2025-03-02T23:00:00.000Z","2025-03-09T23:00:00.000Z","2025-03-16T23:00:00.000Z","2025-03-23T23:00:00.000Z","2025-03-30T22:00:00.000Z","2025-04-06T22:00:00.000Z"],"datasets":[{"label":"Easy Catalog: Wholesale/Retail","data":[4.6,4.5,4.7,4.7,4.7,4.7,4.7,4.5]},{"label":"Catalog Maker by Now in Store","data":[4,4,4,4,4,4,4,4]},{"label":"Catalogly: PDF Catalogs","data":[5,4.9,4.9,4.9,4.9,4.9,5,4.9]},{"label":"Ace Catalog Maker: PDF Catalog","data":[4.8,4.6,4.6,4.7,4.8,4.8,4.8,4.8]},{"label":"Catalog Machine","data":[3.9,4.1,4.1,4.1,4.1,4.1,4.1,4.1]},{"label":"Hukify","data":[4.7,4.8,4.8,4.8,4.8,4.8,4.8,4.8]}]};
 
-        var data2 = {
-            "labels": ["2025-02-16T23:00:00.000Z", "2025-02-23T23:00:00.000Z", "2025-03-02T23:00:00.000Z", "2025-03-09T23:00:00.000Z", "2025-03-16T23:00:00.000Z", "2025-03-23T23:00:00.000Z", "2025-03-30T22:00:00.000Z", "2025-04-06T22:00:00.000Z"],
-            "datasets": [{"label": "Easy Catalog: Wholesale/Retail", "data": [4.6, 4.5, 4.7, 4.7, 4.7, 4.7, 4.7, 4.5]}, {"label": "Catalog Maker by Now in Store", "data": [4, 4, 4, 4, 4, 4, 4, 4]}, {"label": "Catalogly: PDF Catalogs", "data": [5, 4.9, 4.9, 4.9, 4.9, 4.9, 5, 4.9]}, {"label": "Ace Catalog Maker: PDF Catalog", "data": [4.8, 4.6, 4.6, 4.7, 4.8, 4.8, 4.8, 4.8]}, {"label": "Catalog Machine", "data": [3.9, 4.1, 4.1, 4.1, 4.1, 4.1, 4.1, 4.1]}, {"label": "Hukify", "data": [4.7, 4.8, 4.8, 4.8, 4.8, 4.8, 4.8, 4.8]}]
-        };
+        new Chart(document.getElementById("reviewsChart"), {
+            type: 'line',
+            data: reviewsData,
+            options: {
+                responsive: true,
+                title: {
+                    display: true,
+                    text: 'Evolution of total reviews over time'
+                },
+                scales: {
+                    x: {
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Weeks'
+                        }
+                    },
+                    y: {
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Reviews'
+                        }
+                    }
+                },
+                plugins: {
+                  legend: {
+                    position: 'right',
+                  }
+                }
+            }
+        });
 
-        window.onload = function () {
-            var ctx1 = document.getElementById('canvas1').getContext('2d');
-            window.myLine = new Chart(ctx1, {
-                type: 'line',
-                data: data1,
-                options: {
-                    responsive: true,
-                    legend: {
-                        position: 'right',
-                    },
-                    title: {
+        new Chart(document.getElementById("ratingsChart"), {
+            type: 'line',
+            data: ratingsData,
+            options: {
+                responsive: true,
+                title: {
+                    display: true,
+                    text: 'Evolution of average ratings over time'
+                },
+                scales: {
+                    x: {
                         display: true,
-                        text: 'Evolution of Total Reviews Over Time'
-                    }
-                }
-            });
-            var ctx2 = document.getElementById('canvas2').getContext('2d');
-            window.myLine = new Chart(ctx2, {
-                type: 'line',
-                data: data2,
-                options: {
-                    responsive: true,
-                    legend: {
-                        position: 'right',
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Weeks'
+                        }
                     },
-                    title: {
+                    y: {
                         display: true,
-                        text: 'Evolution of Average Ratings Over Time'
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Ratings'
+                        }
                     }
+                },
+                plugins: {
+                  legend: {
+                    position: 'right',
+                  }
                 }
-            });
-        };
+            }
+        });
     </script>
-</body>
 
-</html> 
+</body>
+</html>
 ```
+
+Copy the above code into a .html file, and you should be able to open it in a browser to see the charts. The `reviewsChart` displays the given reviews data, and the `ratingsChart` displays the given ratings data. Use the legend on the right to identify each category.
